@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - SICAT-COEPRIS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <style>
+    :root {
+      --gris-oscuro: #2c3e50;
+      --gris-principal: #34495e;
+      --gris-medio: #576574;
+      --gris-claro: #95a5a6;
+      --gris-fondo: #ecf0f1;
+      --azul-institucional: #3498db;
+      --azul-oscuro: #2980b9;
+      --blanco: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, var(--gris-fondo) 0%, var(--gris-claro) 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(236, 240, 241, 0.3) 2px,
+          rgba(236, 240, 241, 0.3) 4px
+        );
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    .login-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 450px;
+      padding: 20px;
+    }
+
+    .login-card {
+      background: var(--blanco);
+      border-radius: 16px;
+      box-shadow: 
+        0 10px 40px rgba(44, 62, 80, 0.2),
+        0 2px 8px rgba(44, 62, 80, 0.1);
+      overflow: hidden;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-header {
+      background: linear-gradient(135deg, var(--gris-oscuro) 0%, var(--gris-principal) 100%);
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, 
+        var(--azul-institucional) 0%, 
+        var(--gris-medio) 50%, 
+        var(--azul-institucional) 100%);
+    }
+
+    .login-icon {
+      font-size: 4rem;
+      color: var(--azul-institucional);
+      margin-bottom: 1rem;
+      animation: pulse 2s infinite;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .login-title {
+      color: var(--blanco);
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin: 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .login-subtitle {
+      color: var(--blanco);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      opacity: 0.95;
+      letter-spacing: 1px;
+    }
+
+    .login-body {
+      padding: 2.5rem;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: var(--gris-oscuro);
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-control, .form-select {
+      border: 2px solid var(--gris-claro);
+      border-radius: 8px;
+      padding: 0.9rem 1.2rem;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      background: var(--blanco);
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--azul-institucional);
+      box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+      outline: none;
+    }
+
+    .input-group-text {
+      background: var(--gris-fondo);
+      border: 2px solid var(--gris-claro);
+      border-right: none;
+      color: var(--gris-medio);
+    }
+
+    .input-group .form-control {
+      border-left: none;
+    }
+
+    .input-group:focus-within .input-group-text {
+      border-color: var(--azul-institucional);
+      background: rgba(52, 152, 219, 0.1);
+      color: var(--azul-institucional);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      background: linear-gradient(135deg, var(--azul-institucional), var(--azul-oscuro));
+      border: none;
+      border-radius: 8px;
+      color: var(--blanco);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+      margin-top: 1rem;
+    }
+
+    .btn-login:hover {
+      background: linear-gradient(135deg, var(--azul-oscuro), #1f6391);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
+    .alert {
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border: none;
+      animation: slideInDown 0.4s ease;
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--gris-fondo);
+      color: var(--gris-medio);
+      font-size: 0.85rem;
+    }
+
+    .login-footer strong {
+      color: var(--gris-oscuro);
+      font-weight: 700;
+    }
+
+    @media (max-width: 576px) {
+      .login-container {
+        padding: 10px;
+      }
+
+      .login-title {
+        font-size: 1.5rem;
+      }
+
+      .login-icon {
+        font-size: 3rem;
+      }
+
+      .login-body {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <i class="bi bi-shield-lock login-icon"></i>
+        <h1 class="login-title">SICAT-COEPRIS</h1>
+        <p class="login-subtitle">Sistema Integral de Captura y Atención a Trámites</p>
+      </div>
+
+      <div class="login-body">
+        <div id="alert-container"></div>
+
+        <form id="loginForm">
+          <div class="mb-4">
+            <label class="form-label">
+              <i class="bi bi-person-fill"></i> Usuario
+            </label>
+            <select class="form-select" id="usuario" required>
+              <option value="">Seleccionar usuario...</option>
+              <option value="ALEJANDRA SEPULVEDA">ALEJANDRA SEPULVEDA</option>
+              <option value="JOSUE VILLA">JOSUE VILLA</option>
+              <option value="BRENDA GONZALEZ">BRENDA GONZALEZ</option>
+              <option value="ERIK CHAVEZ">ERIK CHAVEZ</option>
+              <option value="MARLEN ROCHA">MARLEN ROCHA</option>
+              <option value="LILIA PEÑA">LILIA PEÑA</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label">
+              <i class="bi bi-key-fill"></i> Contraseña
+            </label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-lock-fill"></i>
+              </span>
+              <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" required>
+              <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                <i class="bi bi-eye-fill" id="eyeIcon"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-login">
+            <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+          </button>
+        </form>
+      </div>
+
+      <div class="login-footer">
+        <p class="mb-0">
+          <strong>Josue Villa</strong> © 2025<br>
+          <em style="font-size: 0.8rem;">Ideas que inspiran, resultados que trascienden</em>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle mostrar/ocultar contraseña
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      const passwordInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eyeIcon');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.className = 'bi bi-eye-slash-fill';
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.className = 'bi bi-eye-fill';
+      }
+    });
+
+    // Manejo del formulario de login
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const usuario = document.getElementById('usuario').value;
+      const password = document.getElementById('password').value;
+      
+      if (!usuario) {
+        showAlert('danger', 'Por favor selecciona un usuario');
+        return;
+      }
+      
+      if (!password) {
+        showAlert('danger', 'Por favor ingresa tu contraseña');
+        return;
+      }
+      
+      // Validar credenciales
+      if (password === 'CIS2025') {
+        // Guardar sesión
+        sessionStorage.setItem('usuario', usuario);
+        sessionStorage.setItem('loggedIn', 'true');
+        
+        showAlert('success', '¡Bienvenido! Redirigiendo...');
+        
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1000);
+      } else {
+        showAlert('danger', 'Contraseña incorrecta. Intenta nuevamente.');
+        document.getElementById('password').value = '';
+      }
+    });
+
+    // Función para mostrar alertas
+    function showAlert(type, message) {
+      const alertContainer = document.getElementById('alert-container');
+      const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+      const icon = type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill';
+      
+      alertContainer.innerHTML = `
+        <div class="alert ${alertClass}">
+          <i class="bi ${icon}"></i> ${message}
+        </div>
+      `;
+      
+      setTimeout(() => {
+        alertContainer.innerHTML = '';
+      }, 5000);
+    }
+
+    // Verificar si ya hay sesión activa
+    window.addEventListener('load', function() {
+      if (sessionStorage.getItem('loggedIn') === 'true') {
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html>

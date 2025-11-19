@@ -1,0 +1,40 @@
+{
+  "name": "sistema-tramites",
+  "version": "1.0.0",
+  "description": "Sistema de gestión de trámites con Node.js, Express y PostgreSQL",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "backup": "node backup.js",
+    "backup:list": "node backup.js list",
+    "backup:scheduler": "node backup-scheduler.js",
+    "backup:now": "node backup-scheduler.js now",
+    "backup:verify": "node verificar-sistema.js",
+    "restore": "node restore.js",
+    "restore:latest": "node restore.js latest"
+  },
+  "keywords": [
+    "tramites",
+    "express",
+    "postgresql",
+    "backup"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "archiver": "^5.3.2",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "exceljs": "^4.4.0",
+    "express": "^4.18.2",
+    "googleapis": "^166.0.0",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
+    "pg": "^8.11.3",
+    "unzipper": "^0.10.14"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

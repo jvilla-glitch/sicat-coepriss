@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SICAT-COEPRIS - Sistema Integral de Captura y Atención a Trámites</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <script>
+    // Verificar autenticación
+    if (!sessionStorage.getItem('loggedIn')) {
+      window.location.href = 'login.html';
+    }
+  </script>
+  <nav class="navbar navbar-dark bg-primary">
+  <div class="container-fluid">
+    <div class="w-100 text-center navbar-content">
+      <div class="navbar-brand-container">
+        <i class="bi bi-file-earmark-text navbar-icon"></i>
+        <div class="navbar-text-content">
+          <h1 class="navbar-title mb-0">SICAT-COEPRIS</h1>
+          <p class="navbar-subtitle mb-0">Sistema Integral de Captura y Atención a Trámites</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="navbar-clock">
+      <span class="text-white me-3">
+        <i class="bi bi-person-fill"></i> <span id="current-user"></span>
+      </span>
+      <span class="text-white me-3">
+        <i class="bi bi-clock"></i> <span id="current-time"></span>
+      </span>
+      <button class="btn btn-sm btn-outline-light" onclick="logout()">
+        <i class="bi bi-box-arrow-right"></i> Salir
+      </button>
+    </div>
+  </div>
+</nav>
+
+  <div class="container-fluid py-4">
+    <div class="row mb-4" id="dashboard">
+      <div class="col-md-3">
+        <div class="card text-white bg-info card-info">
+          <div class="card-body">
+            <h5 class="card-title">En Proceso</h5>
+            <h2 class="card-text" id="stat-proceso">0</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-white bg-warning card-warning">
+          <div class="card-body">
+            <h5 class="card-title">Para Entregar</h5>
+            <h2 class="card-text" id="stat-entregar">0</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-white bg-success card-success">
+          <div class="card-body">
+            <h5 class="card-title">Entregados</h5>
+            <h2 class="card-text" id="stat-entregado">0</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-white bg-dark card-dark">
+          <div class="card-body">
+            <h5 class="card-title">Total Recaudado</h5>
+            <h2 class="card-text" id="stat-recaudado">$0</h2>
+            <small id="stat-total-tramites">0 trámites</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-3">
+            <input type="text" class="form-control" id="search" placeholder="Buscar...">
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="filter-estatus">
+              <option value="">Todos los estatus</option>
+              <option value="En proceso">En proceso</option>
+              <option value="Para entregar">Para entregar</option>
+              <option value="Entregado">Entregado</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="filter-capturo">
+              <option value="">Todos los capturadores</option>
+              <option value="Alejandra Sepúlveda">Alejandra Sepúlveda</option>
+              <option value="Josue Villa">Josue Villa</option>
+              <option value="Brenda González">Brenda González</option>
+              <option value="Erik Chavez">Erik Chavez</option>
+              <option value="Marlen Rocha">Marlen Rocha</option>
+              <option value="Lilia Peña">Lilia Peña</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <input type="date" class="form-control" id="filter-fecha">
+          </div>
+          <div class="botones-container">
+  <!-- Fila 1: Botón NUEVO TRÁMITE (ancho completo) -->
+  <button class="btn btn-success btn-nuevo-tramite" onclick="showModal()">
+    <i class="bi bi-plus-circle"></i> NUEVO TRÁMITE
+  </button>
+  
+  <!-- Fila 2: Todos los botones juntos -->
+  <div class="botones-inferiores-completa">
+    <button class="btn btn-primary" onclick="exportToExcel()">
+      <i class="bi bi-file-earmark-excel"></i> EXPORTAR
+    </button>
+    
+    <button class="btn btn-primary" onclick="window.open('http://kssystems-001-site3.anytempurl.com/Default', '_blank')">
+      <i class="bi bi-currency-dollar"></i> CUOTAS
+    </button>
+    
+    <button class="btn btn-outline-secondary" onclick="showImportModal()">
+      <i class="bi bi-upload"></i> IMPORTAR EXCEL
+    </button>
+    
+    <button class="btn btn-outline-secondary" onclick="showReportModal()">
+      <i class="bi bi-file-earmark-text"></i> GENERAR REPORTE
+    </button>
+    
+    <button class="btn btn-outline-secondary" onclick="window.open('https://www.appsheet.com/start/c0f39c84-fd4b-42aa-b450-2a8894c09865', '_blank')">
+      <i class="bi bi-file-text"></i> MEMORÁNDUMS
+    </button>
+    
+    <button class="btn btn-outline-secondary" onclick="window.open('https://mail.zoho.com/zm/#mail/folder/inbox', '_blank')">
+      <i class="bi bi-envelope"></i> CORREO INSTITUCIONAL
+    </button>
+  </div>
+</div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>No. Entrada</th>
+                <th>Fecha</th>
+                <th>Capturó</th>
+                <th>Razón Social</th>
+                <th>Trámite</th>
+                <th>Estatus</th>
+                <th>Total</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tramites-tbody">
+              <tr>
+                <td colspan="8" class="text-center">Cargando...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <nav>
+          <ul class="pagination justify-content-center" id="pagination"></ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container-fluid">
+      <div class="row align-items-center py-3">
+        <div class="col-md-12 text-center">
+          <p class="footer-text mb-1">
+            <strong>Josue Villa</strong> - Todos los derechos reservados © 2025
+          </p>
+          <p class="footer-tagline mb-0">
+            <em>Ideas que inspiran, resultados que trascienden</em>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal fade" id="tramiteModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Nuevo Trámite</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="tramiteForm">
+            <input type="hidden" id="tramite-id">
+            
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Capturó *</label>
+                <select class="form-select" id="capturo" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="Alejandra Sepúlveda">Alejandra Sepúlveda</option>
+                  <option value="Josue Villa">Josue Villa</option>
+                  <option value="Brenda González">Brenda González</option>
+                  <option value="Erik Chavez">Erik Chavez</option>
+                  <option value="Marlen Rocha">Marlen Rocha</option>
+                  <option value="Lilia Peña">Lilia Peña</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Fecha *</label>
+                <input type="date" class="form-control" id="fecha" required>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label class="form-label">Ventanilla *</label>
+                <div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ventanilla" id="ventanilla-local" value="local" checked onchange="toggleVentanilla()">
+                    <label class="form-check-label" for="ventanilla-local">Local</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ventanilla" id="ventanilla-foraneo" value="foraneo" onchange="toggleVentanilla()">
+                    <label class="form-check-label" for="ventanilla-foraneo">Foráneo</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="campos-foraneo" style="display: none;">
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label class="form-label">No. Oficio Foráneo</label>
+                  <input type="text" class="form-control" id="no_oficio_foraneo">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Coordinación</label>
+                  <input type="text" class="form-control" id="coordinacion">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Fecha Oficio</label>
+                  <input type="date" class="form-control" id="fecha_oficio">
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Razón Social / Nombre Establecimiento *</label>
+                <input type="text" class="form-control" id="razon_social" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Teléfono</label>
+                <input type="tel" class="form-control" id="telefono">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Trámite</label>
+                <input type="text" class="form-control" id="tramite" list="tramites-list">
+                <datalist id="tramites-list"></datalist>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Giro</label>
+                <input type="text" class="form-control" id="giro" list="giros-list">
+                <datalist id="giros-list"></datalist>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label">Estatus *</label>
+                <select class="form-select" id="estatus" required>
+                  <option value="En proceso">En proceso</option>
+                  <option value="Para entregar">Para entregar</option>
+                  <option value="Entregado">Entregado</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Pago Estatal</label>
+                <input type="number" class="form-control" id="pago_estatal" step="0.01" min="0" value="0">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">No. Recibo</label>
+                <input type="text" class="form-control" id="no_recibo">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Pago Federal</label>
+                <input type="number" class="form-control" id="pago_federal" step="0.01" min="0" value="0">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Clave Pago Derechos</label>
+                <input type="text" class="form-control" id="clave_pago_derechos">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label class="form-label">Observaciones</label>
+                <textarea class="form-control" id="observaciones" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="saveTramite()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="viewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Detalles del Trámite</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="viewModalBody">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" onclick="printTramite()">
+            <i class="bi bi-printer"></i> Imprimir
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="importModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Importar Trámites desde Excel</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Seleccionar archivo Excel (.xlsx)</label>
+            <input type="file" class="form-control" id="import-file" accept=".xlsx">
+          </div>
+          <div class="alert alert-info">
+            <small>
+              <strong>Formato esperado:</strong> El archivo debe contener las columnas en el siguiente orden:
+              No. Entrada (se auto-genera), Capturó, Fecha, Ventanilla, Razón Social, Teléfono, Trámite, Giro, Estatus, Pago Estatal, No. Recibo, Pago Federal, Clave Pago, Observaciones.
+            </small>
+          </div>
+          <div id="import-result"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="importExcel()">Importar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="reportModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Generar Reporte</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Fecha Inicio *</label>
+            <input type="date" class="form-control" id="report-start">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Fecha Fin *</label>
+            <input type="date" class="form-control" id="report-end">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Formato</label>
+            <select class="form-select" id="report-format">
+              <option value="excel">Excel (.xlsx)</option>
+              <option value="json">JSON</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="generateReport()">Generar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+  
+  <script>
+      // NUEVO: Forzar que el modal sea interactivo
+  document.addEventListener('DOMContentLoaded', function() {
+    const tramiteModal = document.getElementById('tramiteModal');
+    
+    tramiteModal.addEventListener('shown.bs.modal', function () {
+      // Asegurar que los inputs sean editables cuando se abre el modal
+      const inputs = tramiteModal.querySelectorAll('input, select, textarea');
+      inputs.forEach(input => {
+        input.style.pointerEvents = 'auto';
+        input.removeAttribute('readonly');
+        input.removeAttribute('disabled');
+      });
+      
+      // Dar foco al primer input
+      const firstInput = tramiteModal.querySelector('select#capturo');
+      if (firstInput) {
+        setTimeout(() => firstInput.focus(), 100);
+      }
+    });
+  });
+</script>
+
+<script>
+  function updateTime() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('es-MX', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      second: '2-digit'
+    });
+    document.getElementById('current-time').textContent = timeString;
+  }
+  
+  setInterval(updateTime, 1000);
+  updateTime();
+</script>
+</body>
+</html>

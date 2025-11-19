@@ -1,0 +1,1001 @@
+/* ============================================
+   PALETA DE COLORES INSTITUCIONAL FORMAL
+   ============================================ */
+:root {
+  --gris-oscuro: #2c3e50;
+  --gris-principal: #34495e;
+  --gris-medio: #576574;
+  --gris-claro: #95a5a6;
+  --gris-muy-claro: #bdc3c7;
+  --gris-fondo: #ecf0f1;
+  --gris-fondo-claro: #f8f9fa;
+  --azul-institucional: #3498db;
+  --azul-oscuro: #2980b9;
+  --verde-institucional: #27ae60;
+  --naranja-institucional: #e67e22;
+  --rojo-institucional: #c0392b;
+  --blanco: #ffffff;
+  --texto-oscuro: #2c3e50;
+  --texto-medio: #576574;
+  --border-color: #bdc3c7;
+  --sombra-suave: rgba(44, 62, 80, 0.1);
+  --sombra-media: rgba(44, 62, 80, 0.15);
+  --sombra-fuerte: rgba(44, 62, 80, 0.25);
+}
+.modal-backdrop {
+  z-index: 1040 !important;
+  opacity: 0 !important;  /* ⬅️ Cambiado de 0.3 a 0 (invisible) */
+  pointer-events: none !important;
+  display: none !important;  /* ⬅️ Añadido para eliminar completamente */
+}
+
+.modal {
+  z-index: 1055 !important;
+  pointer-events: auto !important;
+}
+
+.modal-dialog {
+  z-index: 1056 !important;
+  pointer-events: auto !important;
+}
+
+.modal-content {
+  position: relative;
+  z-index: 1057 !important;
+  background: white !important;
+  pointer-events: auto !important;
+}
+
+.modal-body {
+  position: relative;
+  background: var(--gris-fondo-claro) !important;
+  pointer-events: auto !important;
+}
+
+/* Asegurar que todos los elementos del modal sean clickeables */
+.modal input,
+.modal select,
+.modal textarea,
+.modal button,
+.modal label,
+.modal .form-control,
+.modal .form-select,
+.modal .form-check-input {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Asegurar que los inputs sean editables */
+.modal .form-control,
+.modal .form-select {
+  background-color: white !important;
+  cursor: text !important;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+/* ============================================
+   ESTILOS GENERALES
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(135deg, var(--gris-fondo) 0%, var(--gris-fondo-claro) 100%);
+  min-height: 100vh;
+  color: var(--texto-oscuro);
+  position: relative;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(236, 240, 241, 0.3) 2px,
+      rgba(236, 240, 241, 0.3) 4px
+    );
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+.container-fluid {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+/* ============================================
+   NAVBAR INSTITUCIONAL
+   ============================================ */
+.navbar {
+  background: linear-gradient(135deg, var(--gris-oscuro) 0%, var(--gris-principal) 100%) !important;
+  box-shadow: 0 3px 15px var(--sombra-media);
+  padding: 1rem 0;
+  border-bottom: 3px solid var(--azul-institucional);
+  position: relative;
+}
+
+.navbar::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    var(--azul-institucional) 0%, 
+    var(--gris-medio) 50%, 
+    var(--azul-institucional) 100%);
+}
+
+.navbar .container-fluid {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-brand-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar-icon {
+  font-size: 3.5rem;
+  color: var(--azul-institucional);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+  animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.navbar-text-content {
+  text-align: center;
+}
+
+.navbar-title {
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: var(--blanco);
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+  margin: 0;
+  line-height: 1;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.navbar-subtitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--blanco);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  margin-top: 0.5rem;
+  opacity: 1;
+}
+
+.navbar-clock {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.navbar-clock .text-white {
+  font-size: 1rem;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   DASHBOARD CARDS INSTITUCIONAL
+   ============================================ */
+#dashboard .card {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px var(--sombra-suave);
+  position: relative;
+  background: var(--blanco);
+}
+
+#dashboard .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gris-medio);
+}
+
+#dashboard .card.card-info::before {
+  background: linear-gradient(90deg, var(--azul-institucional), var(--azul-oscuro));
+}
+
+#dashboard .card.card-warning::before {
+  background: linear-gradient(90deg, var(--naranja-institucional), #d35400);
+}
+
+#dashboard .card.card-success::before {
+  background: linear-gradient(90deg, var(--verde-institucional), #229954);
+}
+
+#dashboard .card.card-dark::before {
+  background: linear-gradient(90deg, var(--gris-oscuro), var(--gris-principal));
+}
+
+#dashboard .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px var(--sombra-media);
+  border-color: var(--gris-medio);
+}
+
+#dashboard .card-body {
+  padding: 2rem;
+  background: var(--blanco);
+}
+
+#dashboard .card-body i {
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+#dashboard .card-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--texto-medio);
+  margin-bottom: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+#dashboard .card-text {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--gris-oscuro);
+  line-height: 1;
+  font-family: 'Segoe UI', sans-serif;
+  animation: countUp 1s ease-out;
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+#dashboard small {
+  color: var(--texto-medio);
+  font-weight: 500;
+  opacity: 0.85;
+  font-size: 0.85rem;
+}
+
+/* ============================================
+   CARDS DE CONTENIDO
+   ============================================ */
+.card {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px var(--sombra-suave);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  background: var(--blanco);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 18px var(--sombra-media);
+}
+
+.card-body {
+  padding: 2rem;
+  background: var(--blanco);
+}
+
+.card-title {
+  color: var(--gris-oscuro);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 2px solid var(--gris-fondo);
+  padding-bottom: 0.75rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ============================================
+   BOTONES INSTITUCIONALES
+   ============================================ */
+.btn {
+  border-radius: 6px;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  font-size: 0.875rem;
+  box-shadow: 0 3px 8px var(--sombra-suave);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px var(--sombra-media);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--azul-institucional), var(--azul-oscuro));
+  color: var(--blanco);
+  border-color: var(--azul-oscuro);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--azul-oscuro), #1f6391);
+  border-color: #1f6391;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--verde-institucional), #229954);
+  color: var(--blanco);
+  border-color: #229954;
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, #1e8449, var(--verde-institucional));
+  border-color: #1e8449;
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, var(--naranja-institucional), #d35400);
+  color: var(--blanco);
+  border-color: #d35400;
+}
+
+.btn-warning:hover {
+  background: linear-gradient(135deg, #ca6f1e, var(--naranja-institucional));
+  border-color: #ca6f1e;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--rojo-institucional), #a93226);
+  color: var(--blanco);
+  border-color: #a93226;
+}
+
+.btn-danger:hover {
+  background: linear-gradient(135deg, #922b21, var(--rojo-institucional));
+  border-color: #922b21;
+}
+
+.btn-info {
+  background: linear-gradient(135deg, #17a2b8, #138496);
+  color: var(--blanco);
+  border-color: #138496;
+}
+
+.btn-info:hover {
+  background: linear-gradient(135deg, #117a8b, #17a2b8);
+  border-color: #117a8b;
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, var(--gris-medio), var(--gris-claro));
+  color: var(--blanco);
+  border-color: var(--gris-claro);
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, var(--gris-principal), var(--gris-medio));
+  border-color: var(--gris-medio);
+}
+
+.btn-outline-secondary {
+  border: 2px solid var(--gris-medio);
+  color: var(--gris-medio);
+  background: transparent;
+  font-weight: 600;
+}
+
+.btn-outline-secondary:hover {
+  background: var(--gris-medio);
+  color: var(--blanco);
+  border-color: var(--gris-medio);
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  border-radius: 5px;
+}
+
+.btn i {
+  margin-right: 6px;
+}
+
+/* ============================================
+   CONTENEDOR DE BOTONES - NUEVO DISEÑO
+   ============================================ */
+.botones-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.btn-nuevo-tramite {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.botones-inferiores-completa {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+}
+
+.botones-inferiores-completa .btn {
+  flex: 1;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+@media (max-width: 1200px) {
+  .botones-inferiores-completa {
+    flex-wrap: wrap;
+  }
+  
+  .botones-inferiores-completa .btn {
+    flex: 1 1 calc(33.333% - 10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .botones-inferiores-completa .btn {
+    flex: 1 1 calc(50% - 7.5px);
+  }
+}
+
+@media (max-width: 576px) {
+  .botones-inferiores-completa {
+    flex-direction: column;
+  }
+  
+  .botones-inferiores-completa .btn {
+    width: 100%;
+  }
+  
+  .btn-nuevo-tramite {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+}
+
+/* ============================================
+   BADGES INSTITUCIONALES
+   ============================================ */
+.badge {
+  font-size: 0.8rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px var(--sombra-suave);
+  border: 1px solid transparent;
+}
+
+.badge-proceso {
+  background: var(--azul-institucional);
+  color: var(--blanco);
+  border-color: var(--azul-oscuro);
+}
+
+.badge-entregar {
+  background: var(--naranja-institucional);
+  color: var(--blanco);
+  border-color: #d35400;
+}
+
+.badge-entregado {
+  background: var(--verde-institucional);
+  color: var(--blanco);
+  border-color: #229954;
+}
+
+/* ============================================
+   TABLA INSTITUCIONAL
+   ============================================ */
+.table-responsive {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px var(--sombra-suave);
+  border: 1px solid var(--border-color);
+}
+
+.table {
+  margin-bottom: 0;
+  color: var(--texto-oscuro);
+}
+
+.table thead th {
+  background: linear-gradient(135deg, var(--gris-oscuro), var(--gris-principal));
+  color: var(--blanco);
+  border: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  padding: 1.2rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 8px var(--sombra-suave);
+}
+
+.table tbody {
+  background: var(--blanco);
+}
+
+.table tbody tr {
+  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--gris-fondo);
+}
+
+.table tbody tr:nth-child(even) {
+  background: var(--gris-fondo-claro);
+}
+
+.table tbody tr:hover {
+  background: var(--gris-fondo);
+  box-shadow: 0 3px 10px var(--sombra-suave);
+  transform: scale(1.005);
+}
+
+.table tbody td {
+  vertical-align: middle;
+  padding: 1.2rem;
+  color: var(--texto-oscuro);
+  border-color: var(--gris-fondo);
+  font-weight: 500;
+}
+
+.table tbody td strong {
+  color: var(--gris-oscuro);
+  font-weight: 700;
+}
+
+.table tbody td i {
+  color: var(--gris-medio);
+  margin-right: 0.5rem;
+}
+
+/* ============================================
+   FORMULARIOS INSTITUCIONALES
+   ============================================ */
+.form-label {
+  font-weight: 600;
+  color: var(--gris-oscuro);
+  margin-bottom: 0.6rem;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-control, .form-select {
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  background: var(--blanco);
+  color: var(--texto-oscuro);
+  box-shadow: inset 0 1px 3px var(--sombra-suave);
+  font-weight: 500;
+}
+
+.form-control::placeholder {
+  color: var(--gris-claro);
+  font-weight: 400;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--azul-institucional);
+  box-shadow: 
+    0 0 0 0.2rem rgba(52, 152, 219, 0.15),
+    inset 0 1px 3px var(--sombra-suave);
+  background: var(--blanco);
+  outline: none;
+}
+
+.form-check-input {
+  width: 1.4em;
+  height: 1.4em;
+  border: 2px solid var(--border-color);
+  background-color: var(--blanco);
+}
+
+.form-check-input:checked {
+  background-color: var(--azul-institucional);
+  border-color: var(--azul-institucional);
+}
+
+.form-check-label {
+  color: var(--texto-oscuro);
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+
+/* ============================================
+   MODAL INSTITUCIONAL
+   ============================================ */
+.modal-content {
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px var(--sombra-fuerte);
+  background: var(--blanco);
+}
+
+.modal-header {
+  background: linear-gradient(135deg, var(--gris-oscuro), var(--gris-principal));
+  color: var(--blanco);
+  border-bottom: 3px solid var(--azul-institucional);
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px var(--sombra-suave);
+}
+
+.modal-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--blanco);
+  font-size: 1.25rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.modal-header .btn-close {
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+
+.modal-header .btn-close:hover {
+  opacity: 1;
+}
+
+.modal-body {
+  padding: 2rem;
+  background: var(--gris-fondo-claro);
+}
+
+.modal-footer {
+  background: var(--blanco);
+  border-top: 2px solid var(--gris-fondo);
+  padding: 1.25rem 2rem;
+}
+
+/* ============================================
+   PAGINACIÓN INSTITUCIONAL
+   ============================================ */
+.pagination {
+  margin-top: 2rem;
+  gap: 0.5rem;
+}
+
+.page-link {
+  color: var(--gris-oscuro);
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin: 0 0.2rem;
+  background: var(--blanco);
+}
+
+.page-link:hover {
+  background: var(--azul-institucional);
+  color: var(--blanco);
+  border-color: var(--azul-institucional);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px var(--sombra-suave);
+}
+
+.page-item.active .page-link {
+  background: linear-gradient(135deg, var(--gris-oscuro), var(--gris-principal));
+  border-color: var(--gris-principal);
+  color: var(--blanco);
+  box-shadow: 0 3px 8px var(--sombra-media);
+}
+
+.page-item.disabled .page-link {
+  background: var(--gris-fondo);
+  border-color: var(--gris-muy-claro);
+  color: var(--gris-claro);
+}
+
+/* ============================================
+   BOTONES DE ACCIÓN
+   ============================================ */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.action-buttons .btn {
+  padding: 0.5rem 0.9rem;
+  font-size: 0.85rem;
+  border-radius: 5px;
+  min-width: 40px;
+}
+
+/* ============================================
+   ALERTAS INSTITUCIONALES
+   ============================================ */
+.alert {
+  border: 2px solid;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px var(--sombra-suave);
+  animation: slideInDown 0.4s ease;
+  font-weight: 500;
+  padding: 1rem 1.25rem;
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.alert-success {
+  background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(34, 153, 84, 0.1));
+  border-color: var(--verde-institucional);
+  color: #1e8449;
+}
+
+.alert-danger {
+  background: linear-gradient(135deg, rgba(192, 57, 43, 0.1), rgba(169, 50, 38, 0.1));
+  border-color: var(--rojo-institucional);
+  color: #922b21;
+}
+
+.alert-info {
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.1));
+  border-color: var(--azul-institucional);
+  color: #1f6391;
+}
+
+/* ============================================
+   LOADING ANIMATION
+   ============================================ */
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: var(--gris-medio);
+}
+
+.loading::after {
+  content: " ";
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid var(--gris-fondo);
+  border-top: 4px solid var(--azul-institucional);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ============================================
+   SCROLLBAR PERSONALIZADA
+   ============================================ */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gris-fondo);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--gris-medio), var(--gris-claro));
+  border-radius: 6px;
+  border: 2px solid var(--gris-fondo);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--gris-principal), var(--gris-medio));
+}
+
+/* ============================================
+   FOOTER INSTITUCIONAL
+   ============================================ */
+.footer {
+  background: linear-gradient(135deg, var(--gris-oscuro) 0%, var(--gris-principal) 100%);
+  border-top: 3px solid var(--azul-institucional);
+  box-shadow: 0 -3px 15px var(--sombra-media);
+  margin-top: 3rem;
+  padding: 1.5rem 0;
+}
+
+.footer-text {
+  color: var(--blanco);
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.footer-text strong {
+  font-weight: 700;
+  color: var(--blanco);
+  letter-spacing: 0.5px;
+}
+
+.footer-tagline {
+  color: var(--blanco);
+  font-size: 0.9rem;
+  font-style: italic;
+  opacity: 0.95;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  #dashboard .card-text {
+    font-size: 2.2rem;
+  }
+  
+  .navbar-title {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+  }
+  
+  .navbar-subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .navbar-icon {
+    font-size: 2.5rem;
+  }
+  
+  .navbar-clock {
+    position: relative;
+    right: 0;
+    top: 0;
+    transform: none;
+    margin-top: 1rem;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .navbar .container-fluid {
+    flex-direction: column;
+  }
+  
+  .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.8rem;
+  }
+  
+  .table {
+    font-size: 0.85rem;
+  }
+  
+  .modal-body {
+    padding: 1.5rem;
+  }
+  
+  .footer-text {
+    font-size: 0.85rem;
+  }
+  
+  .footer-tagline {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-title {
+    font-size: 1.5rem;
+  }
+  
+  .navbar-subtitle {
+    font-size: 0.7rem;
+  }
+  
+  .navbar-icon {
+    font-size: 2rem;
+  }
+}
+
+/* ============================================
+   UTILIDADES
+   ============================================ */
+strong {
+  font-weight: 700;
+}
+
+hr {
+  border-color: var(--border-color);
+  opacity: 0.3;
+  margin: 1.5rem 0;
+}
+
+.shadow-sm {
+  box-shadow: 0 2px 6px var(--sombra-suave) !important;
+}
+
+.shadow {
+  box-shadow: 0 4px 12px var(--sombra-media) !important;
+}
+
+.shadow-lg {
+  box-shadow: 0 8px 24px var(--sombra-fuerte) !important;
+}
