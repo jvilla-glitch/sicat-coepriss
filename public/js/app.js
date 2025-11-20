@@ -576,12 +576,36 @@ async function loadCatalogos() {
 // Formatear fecha
 function formatDate(dateString) {
   if (!dateString) return 'N/A';
-  const date = new Date(dateString + 'T00:00:00');
-  return date.toLocaleDateString('es-MX', { 
-    year: 'numeric', 
-    month: '2-digit', 
-    day: '2-digit' 
-  });
+  
+  try {
+    // Si la fecha es solo formato YYYY-MM-DD, agregar la hora
+    // Si ya tiene timestamp, usarla directamente
+    let date;
+    
+    if (dateString.includes('T') || dateString.includes(' ')) {
+      // Ya tiene hora, usar directamente
+      date = new Date(dateString);
+    } else {
+      // Solo tiene fecha, agregar hora para evitar problemas de zona horaria
+      date = new Date(dateString + 'T00:00:00');
+    }
+    
+    // Verificar si la fecha es válida
+    if (isNaN(date.getTime())) {
+      console.error('Fecha inválida:', dateString);
+      return 'Invalid Date';
+    }
+    
+    return date.toLocaleDateString('es-MX', { 
+      year: 'numeric', 
+      month: '2-digit', 
+      day: '2-digit',
+      timeZone: 'America/Mexico_City'
+    });
+  } catch (error) {
+    console.error('Error al formatear fecha:', dateString, error);
+    return 'Invalid Date';
+  }
 }
 
 // Mostrar alertas
