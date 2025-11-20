@@ -98,11 +98,13 @@ router.get('/:id', async (req, res) => {
     }
     
     const tramite = {
-      ...result.rows[0],
-      no_entrada_formatted: formatNoEntrada(result.rows[0].no_entrada),
-      pago_estatal: parseFloat(result.rows[0].pago_estatal),
-      pago_federal: parseFloat(result.rows[0].pago_federal)
-    };
+  ...result.rows[0],
+  no_entrada_formatted: formatNoEntrada(result.rows[0].no_entrada),
+  fecha: result.rows[0].fecha ? result.rows[0].fecha.toISOString().split('T')[0] : null, // ✅ AGREGAR
+  fecha_oficio: result.rows[0].fecha_oficio ? result.rows[0].fecha_oficio.toISOString().split('T')[0] : null, // ✅ AGREGAR
+  pago_estatal: parseFloat(result.rows[0].pago_estatal),
+  pago_federal: parseFloat(result.rows[0].pago_federal)
+};
     
     res.json(tramite);
   } catch (error) {
