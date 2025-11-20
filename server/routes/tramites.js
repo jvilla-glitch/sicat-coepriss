@@ -65,11 +65,13 @@ router.get('/', async (req, res) => {
     const tramitesResult = await pool.query(query, params);
     
     const tramites = tramitesResult.rows.map(t => ({
-      ...t,
-      no_entrada_formatted: formatNoEntrada(t.no_entrada),
-      pago_estatal: parseFloat(t.pago_estatal),
-      pago_federal: parseFloat(t.pago_federal)
-    }));
+  ...t,
+  no_entrada_formatted: formatNoEntrada(t.no_entrada),
+  fecha: t.fecha ? t.fecha.toISOString().split('T')[0] : null, // ✅ AGREGAR ESTA LÍNEA
+  fecha_oficio: t.fecha_oficio ? t.fecha_oficio.toISOString().split('T')[0] : null, // ✅ AGREGAR ESTA LÍNEA
+  pago_estatal: parseFloat(t.pago_estatal),
+  pago_federal: parseFloat(t.pago_federal)
+}));
     
     res.json({
       data: tramites,
